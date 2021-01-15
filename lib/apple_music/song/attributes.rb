@@ -27,7 +27,11 @@ module AppleMusic
         @name = props['name'] # required
         @play_params = PlayParameters.new(props['playParams']) if props['playParams']
         @previews = Array(props['previews']).map { |attrs| Preview.new(attrs) } # required
-        @release_date = Date.parse(props['releaseDate']) # required
+        @release_date = begin # required
+                          Date.parse(props['releaseDate'])
+                        rescue ArgumentError
+                          Date.parse("#{props['releaseDate']}/01/01")
+                        end
         @track_number = props['trackNumber'] # required
         @url = props['url'] # required
         @work_name = props['workName']
