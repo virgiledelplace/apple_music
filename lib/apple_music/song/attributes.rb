@@ -30,7 +30,7 @@ module AppleMusic
         @release_date = begin # required
                           Date.parse(props['releaseDate'])
                         rescue ArgumentError
-                          Date.parse("#{props['releaseDate']}/01/01")
+                          props['releaseDate'].nil? ? DateTime.now : Date.parse("#{props['releaseDate']}/01/01")
                         end
         @track_number = props['trackNumber'] # required
         @url = props['url'] # required
